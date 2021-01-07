@@ -11,8 +11,18 @@
   </head>
   <body>
     <div class="row justify-content-center">
-        <h1>This will be the login screen</h1>
-    </div> 
+        <h1>Login</h1>
+    </div>
+    <div class="row justify-content-center">
+        <form action="{{ url_for('auth.show_login') }}" method="POST">
+          <input type="text" name="email" placeholder="Email" class="form-control"/>
+          <input type="password" name="password" placeholder="Password" class="form-control" />
+          <input type="submit" value="Submit" style="color: white" class="btn btn-success form-control" />
+        </form>
+    </div>
+    <div class="row justify-content-center">
+      <a href="{{ url_for('auth.show_registration') }}">Register Here!</a>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

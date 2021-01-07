@@ -2,10 +2,15 @@
 import flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
+from flask_login import LoginManager
 
 
 # Create an instance of the db
 db = SQLAlchemy()
+
+# Initialize Login
+login = LoginManager()
+login.login_view = 'auth.show_login'
 
 def create_app():
     """Creates an instance of the application."""
@@ -17,6 +22,9 @@ def create_app():
 
     # Link the db to the app
     db.init_app(app)
+
+    # Link the login
+    login.init_app(app)
 
     # Register the blueprints
     from .blueprints.authentication import auth_bp

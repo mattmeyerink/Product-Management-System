@@ -1,7 +1,8 @@
 """Models for user authentication including Users and UserRole."""
-from app import db
+from app import db, login
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 
 class UserRole(db.Model):
@@ -13,7 +14,7 @@ class UserRole(db.Model):
     can_edit_products = db.Column(db.Boolean())
     can_delete_products = db.Column(db.Boolean())
     can_view_users = db.Column(db.Boolean())
-    users = db.relationship("User", cascade="all, delete-orphan", backref="user_roles", lazy=True)
+    #users = db.relationship("User", cascade="all, delete-orphan", backref="user_roles", lazy=True)
 
     def __reper__(self):
         return f"<UserRole {self.name}: {self.id}>"
@@ -35,7 +36,7 @@ class UserRole(db.Model):
         }
         return data
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """Represents a user of the app in the db."""
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +44,7 @@ class User(db.Model):
     last_name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True, index=True)
     password = db.Column(db.String(200))
-    role = db.Column(db.ForeignKey("user_roles.id"))
+    #role = db.Column(db.ForeignKey("user_roles.id"))
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -58,6 +59,14 @@ class User(db.Model):
         """Remove the current user from the db."""
         db.session.delete(self)
         db.session.commit()
+
+    def hash_password(self, original_password):
+        """Hash the input password to store in the db."""
+        self.password = generate_password_hash(original_password)
+
+    def check_password_hash(self, original_password):
+        """Compare the input password to the hased password in db."""
+        return check_password_hash(self.password, original_password)
 
     def from_dict(self, data):
         """Populate a user object from a dictionary."""
@@ -76,3 +85,7 @@ class User(db.Model):
             "created_on": self.created_on
         }
         return data
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
