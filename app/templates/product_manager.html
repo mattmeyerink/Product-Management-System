@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+      <div class="row justify-content-center">
+          <h1>Product Manager</h1>
+      </div>
+      <div class="row justify-content-center">
+          <div class="col-md-4">
+            <h3>New Product Category</h3>
+            <form action="http://localhost:5000/products/add_product_category" method="POST">
+                <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Category Name"/>
+                <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
+            </form>
+          </div>
+          <div class="col-md-4">
+            <h3>New Product</h3>
+            <form action="http://localhost:5000/products/add_product" method="POST">
+                <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Product Name"/>
+                <input type="number" name="price" class="form-control" style="margin-bottom: 5px" placeholder="Price"/>
+                <select name="category" class="form-control" style="margin-bottom: 5px" >
+                    {% for category in categories %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="description" class="form-control" style="margin-bottom: 5px" placeholder="Description"></textarea>
+                <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
+            </form>
+          </div>
+      </div>
+
+      {% for product in products %}
+        <div class="row justify-content-center" style="margin: 10px">
+            <div class="col-md-10">
+                <div class="row border border-dark">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <strong>{{product.name}} - $ {{product.price}}</strong>
+                        </div>
+                        <div class="row">
+                            <p>{{product.description}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ url_for('products.delete_product', id=product.id) }}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      {% endfor %}
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

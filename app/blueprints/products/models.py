@@ -3,7 +3,7 @@ from app import db
 from datetime import datetime
 
 
-class ProductCategory:
+class ProductCategory(db.Model):
     __tablename__ = "product_categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -38,7 +38,7 @@ class ProductCategory:
         }
         return data
 
-class Product:
+class Product(db.Model):
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))

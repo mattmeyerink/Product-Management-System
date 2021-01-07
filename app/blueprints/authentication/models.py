@@ -4,7 +4,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class UserRole:
+class UserRole(db.Model):
     """Defines the access different users have across the site."""
     __tablename__ = "user_roles"
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +35,7 @@ class UserRole:
         }
         return data
 
-class User:
+class User(db.Model):
     """Represents a user of the app in the db."""
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
