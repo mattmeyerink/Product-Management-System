@@ -14,7 +14,8 @@ class UserRole(db.Model):
     can_edit_products = db.Column(db.Boolean())
     can_delete_products = db.Column(db.Boolean())
     can_view_users = db.Column(db.Boolean())
-    #users = db.relationship("User", cascade="all, delete-orphan", backref="user_roles", lazy=True)
+    code = db.Column(db.Integer)
+    users = db.relationship("User", cascade="all, delete-orphan", backref="user_roles", lazy=True)
 
     def __reper__(self):
         return f"<UserRole {self.name}: {self.id}>"
@@ -44,7 +45,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True, index=True)
     password = db.Column(db.String(200))
-    #role = db.Column(db.ForeignKey("user_roles.id"))
+    role = db.Column(db.ForeignKey("user_roles.id"))
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):

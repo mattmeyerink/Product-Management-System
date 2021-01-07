@@ -35,6 +35,12 @@ def show_registration():
         user = User()
         user.from_dict(form_data)
         user.hash_password(password)
+
+        if form_data["code"] == "12345":
+            user.role = 1
+        else:
+            user.role = 2
+        
         user.save()
         return flask.redirect(flask.url_for("products.show_product_manager"))
 
@@ -45,4 +51,4 @@ def show_registration():
 def logout():
     """Logout the current user."""
     logout_user()
-    return flask.redirect(flask.url_for("authentication.login"))
+    return flask.redirect(flask.url_for("auth.show_login"))

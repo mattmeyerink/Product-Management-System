@@ -12,30 +12,34 @@
   <body>
       <div class="row justify-content-center">
           <h1>Product Manager</h1>
+          <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary">Logout</a>
       </div>
+      {% if role == 1%}
       <div class="row justify-content-center">
-          <div class="col-md-4">
-            <h3>New Product Category</h3>
-            <form action="http://localhost:5000/products/add_product_category" method="POST">
-                <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Category Name"/>
-                <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
-            </form>
-          </div>
-          <div class="col-md-4">
-            <h3>New Product</h3>
-            <form action="http://localhost:5000/products/add_product" method="POST">
-                <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Product Name"/>
-                <input type="number" name="price" class="form-control" style="margin-bottom: 5px" placeholder="Price"/>
-                <select name="category" class="form-control" style="margin-bottom: 5px" >
-                    {% for category in categories %}
-                        <option value="{{category.id}}">{{category.name}}</option>
-                    {% endfor %}
-                </select>
-                <textarea name="description" class="form-control" style="margin-bottom: 5px" placeholder="Description"></textarea>
-                <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
-            </form>
-          </div>
-      </div>
+        <div class="col-md-4">
+          <h3>New Product Category</h3>
+          <form action="http://localhost:5000/products/add_product_category" method="POST">
+              <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Category Name"/>
+              <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <h3>New Product</h3>
+          <form action="http://localhost:5000/products/add_product" method="POST">
+              <input type="text" name="name" class="form-control" style="margin-bottom: 5px" placeholder="Product Name"/>
+              <input type="number" name="price" class="form-control" style="margin-bottom: 5px" placeholder="Price"/>
+              <select name="category" class="form-control" style="margin-bottom: 5px" >
+                  {% for category in categories %}
+                      <option value="{{category.id}}">{{category.name}}</option>
+                  {% endfor %}
+              </select>
+              <textarea name="description" class="form-control" style="margin-bottom: 5px" placeholder="Description"></textarea>
+              <input type="submit" value="Submit" class="btn btn-success form-control" style="color: white"/>
+          </form>
+        </div>
+    </div>
+      {% endif %}
+      
 
       {% for product in products %}
         <div class="row justify-content-center" style="margin: 10px">

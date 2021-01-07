@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 def show_product_manager():
     """Display the main product manager page."""
     context = {
+        "role": current_user.role,
         "categories": ProductCategory.query.all(),
         "products": Product.query.all()
     }
